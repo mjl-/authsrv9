@@ -1,0 +1,37 @@
+# status
+
+should work, using it on local network.  see the manual page and
+the todo-list below for caveats.
+
+
+# intro
+
+this provides a plan 9 authentication service (auth/authsrv) for
+unix.  it is plain c and does not depend on external libraries.  it
+currently only works on openbsd as far as i know, due to its des
+library being used.  in the future, there will likely be a version
+in limbo.
+
+
+# install
+
+for the unix code:
+execute "make".  see the manual page authsrv9.8 for more information.
+
+
+# latest version
+
+get it from http://www.ueber.net/code/r/authsrv9
+
+
+# licence & author
+
+all files are in the public domain.  this code has been written by
+mechiel lukkien, reachable at mechiel@ueber.net or mechiel@xs4all.nl.
+
+
+# todo
+
+- find standard des lib that is available on all unixes.  or include the code.
+- cleanup, finish & include the limbo version.
+- do a thorough security review
