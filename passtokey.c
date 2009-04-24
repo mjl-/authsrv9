@@ -78,16 +78,17 @@ char *
 readpass(char *pw, int n)
 {
 	size_t len;
-	char *p;
+	char buf[64];
 
-	p = fgetln(stdin, &len);
-	if(p == nil)
+	if(fgets(buf, sizeof buf, stdin) == nil)
 		return "read error";
+	len = strlen(buf);
+	if(buf[len-1] == '\n')
+		buf[--len] = '\0';
 	if(len < 8)
 		return "too short";
-	if(len > n || p[len-1] != '\n')
+	if(len >= n)
 		return "too long";
-	memmove(pw, p, len);
-	pw[len-1] = '\0';
+	memmove(pw, buf, len+1);
 	return nil;
 }
