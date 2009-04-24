@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 #include "util.h"
 
@@ -130,7 +131,7 @@ eq(char *a, char *b)
 }
 
 int
-memeq(char *a, char *b, int n)
+memeq(void *a, void *b, int n)
 {
 	return memcmp(a, b, n) == 0;
 }

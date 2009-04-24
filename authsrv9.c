@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
+#include <time.h>
 #include <unistd.h>
 #include "util.h"
 
@@ -141,7 +142,7 @@ autherror(int fatal, char *err)
 }
 
 static int
-readfile(char *path, uchar *buf, int buflen, int exact)
+readfile(char *path, void *buf, int buflen, int exact)
 {
 	int fd;
 	int n;
@@ -242,7 +243,7 @@ getuserinfo(char *uid, User *u)
 }
 
 static int
-move(char *to, char *from, int n)
+move(void *to, void *from, int n)
 {
 	memmove(to, from, n);
 	return n;

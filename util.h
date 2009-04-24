@@ -21,7 +21,7 @@ void randombuf(uchar *p, int n);
 
 char *hex(uchar *buf, int n);
 int eq(char *a, char *b);
-int memeq(char *a, char *b, int n);
+int memeq(void *a, void *b, int n);
 int min(int a, int b);
 
 char *remoteaddr(int fd);

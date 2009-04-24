@@ -1,3 +1,4 @@
+# CFLAGS=-Wall -D_GNU_SOURCE
 CFLAGS=-Wall
 LD=cc
 LDFLAGS=-static
