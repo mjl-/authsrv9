@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include "util.h"
 
+#include "des.h"
+
 long
 readn(int fd, void *buf, long n)
 {
@@ -188,59 +190,43 @@ passtokey(uchar *key, char *pw)
 }
 
 
-/* turn 56 bit key into 64 bit key.  each bytes lsb is a parity bit, but the openbsd lib doesn't check for it, so ignore */
 void
-des64key(uchar *k56, uchar *k64)
+authencrypt(uchar *k56, uchar *buf, int n)
 {
-	uvlong k;
-	int i;
-
-	k = 0;
-	for(i = 0; i < 7; i++)
-		k |= (uvlong)k56[i]<<(56-(i+1)*8);
-	for(i = 0; i < 8; i++)
-		k64[i] = (k>>(56-(i+1)*7))<<1;
-}
-
-void
-authencrypt(uchar *key, uchar *buf, int n)
-{
-	uchar k64[8];
 	uchar *p;
 	int i;
 	int r;
+	Desks ks;
 
-        if(n < 8)
+	if(n < 8)
 		exit(1); /* not much better to do */
 	
-	des64key(key, k64);
-	des_setkey(k64);
+	deskey56(&ks, k56);
 
 	n -= 1;
 	r = n%7;
 	n /= 7;
 	p = buf;
 	for(i = 0; i < n; i++) {
-		des_cipher(p, p, 0, 1);
+		desenc(&ks, p);
 		p += 7;
 	}
 	if(r)
-		des_cipher(p-7+r, p-7+r, 0, 1);
+		desenc(&ks, p-7+r);
 }
 
 void
-authdecrypt(uchar *key, uchar *buf, int n)
+authdecrypt(uchar *k56, uchar *buf, int n)
 {
-	uchar k64[8];
 	uchar *p;
 	int i;
 	int r;
+	Desks ks;
 
-        if(n < 8)
+	if(n < 8)
 		exit(1); /* not much better to do */
 	
-	des64key(key, k64);
-	des_setkey(k64);
+	deskey56(&ks, k56);
 
 	p = buf;
 	n -= 1;
@@ -248,10 +234,10 @@ authdecrypt(uchar *key, uchar *buf, int n)
 	n /= 7;
 	p += n*7;
 	if(r)
-		des_cipher(p-7+r, p-7+r, 0, -1);
+		desdec(&ks, p-7+r);
 	for(i = 0; i < n; i++) {
 		p -= 7;
-		des_cipher(p, p, 0, -1);
+		desdec(&ks, p);
 	}
 }
 

@@ -7,10 +7,8 @@ the todo-list below for caveats.
 # intro
 
 this provides a plan 9 authentication service (auth/authsrv) for
-unix.  it is plain c and does not depend on external libraries.  it
-currently only works on openbsd as far as i know, due to its des
-library being used.  in the future, there will likely be a version
-in limbo.
+unix.  it is plain c and does not depend on external libraries.  in
+the future, there will likely be a version in limbo.
 
 
 # install
@@ -32,6 +30,5 @@ mechiel lukkien, reachable at mechiel@ueber.net or mechiel@xs4all.nl.
 
 # todo
 
-- find standard des lib that is available on all unixes.  or include the code.
 - cleanup, finish & include the limbo version.
 - do a thorough security review
