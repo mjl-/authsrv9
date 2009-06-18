@@ -478,16 +478,16 @@ authpass(Ticketreq *tr)
 		clear(prbuf, sizeof prbuf);
 
                 if(pr.which != APass) {
+			warn("pass change: for uid %s: wrong message type, want %d, saw %d (wrong password used)", tr->uid, APass, pr.which);
 			clear(&pr, sizeof pr);
 			clear(kc, sizeof kc);
-			warn("pass change: for uid %s: wrong message type, want %d, saw %d (wrong password used)", tr->uid, APass, pr.which);
                         autherror(1, "wrong message type for Passreq");
 		}
 
                 if(pr.changesecret) {
-			clear(&pr, sizeof pr);
 			warn("pass change: uid %s tried to change apop secret, not supported", tr->uid);
                         autherror(0, "changing apop secret not supported");
+			clear(&pr, sizeof pr);
                         continue;
                 }
 
@@ -495,14 +495,12 @@ authpass(Ticketreq *tr)
 		passtokey(nkey, pr.newpw);
                 if(!memeq(kc, okey, sizeof okey)) {
 			clear(&pr, sizeof pr);
-			clear(kc, sizeof kc);
 			clear(okey, sizeof okey);
 			clear(nkey, sizeof nkey);
 			warn("pass change: uid %s gave bad old password", tr->uid);
                         autherror(0, "bad old password");
                         continue;
                 }
-		clear(kc, sizeof kc);
 
                 badpw = checkpass(pr.newpw);
                 if(badpw != nil) {
@@ -519,6 +517,7 @@ authpass(Ticketreq *tr)
 			clear(&pr, sizeof pr);
 			clear(okey, sizeof okey);
 			clear(nkey, sizeof nkey);
+			clear(kc, sizeof kc);
                         warn("pass change: storing new key for user %s failed: %s", tr->uid, errstr);
                         autherror(1, "storing new key failed");
                 }
@@ -526,6 +525,7 @@ authpass(Ticketreq *tr)
 		clear(&pr, sizeof pr);
 		clear(okey, sizeof okey);
 		clear(nkey, sizeof nkey);
+		clear(kc, sizeof kc);
 		warn("pass change: password changed for user %s", tr->uid);
 
                 /* A->C: AuthOK or AuthErr, 64-byte error message */

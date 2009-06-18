@@ -6,9 +6,9 @@ the todo-list below for caveats.
 
 # intro
 
-this provides a plan 9 authentication service (auth/authsrv) for
-unix.  it is plain c and does not depend on external libraries.  in
-the future, there will likely be a version in limbo.
+this provides a plan 9 authentication service (auth/authsrv).  one
+version is for unix, written in c and not depending on external
+libraries.  the other version is for inferno, written in limbo.
 
 
 # install
@@ -16,10 +16,16 @@ the future, there will likely be a version in limbo.
 for the unix code:
 execute "make".  see the manual page authsrv9.8 for more information.
 
+for the inferno code:
+make sure you have a valid "mkconfig", execute "mk install".  see
+the manual page authsrv9(8) for more information.
+
 
 # latest version
 
-get it from http://www.ueber.net/code/r/authsrv9
+get it from:
+
+	http://www.ueber.net/code/r/authsrv9
 
 
 # licence & author
@@ -30,5 +36,4 @@ mechiel lukkien, reachable at mechiel@ueber.net or mechiel@xs4all.nl.
 
 # todo
 
-- cleanup, finish & include the limbo version.
 - do a thorough security review
