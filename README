@@ -17,8 +17,11 @@ for the unix code:
 execute "make".  see the manual page authsrv9.8 for more information.
 
 for the inferno code:
-make sure you have a valid "mkconfig", execute "mk install".  see
-the manual page authsrv9(8) for more information.
+modify "mkconfig" if you don't have $ROOT set, execute "mk install".
+see the manual page authsrv9(8) for more information.
+
+when building from within inferno, insert SYSHOST=Inferno and ROOT=
+in the mk invocations to override the values in the mkconfig.
 
 
 # latest version
@@ -31,7 +34,7 @@ get it from:
 # licence & author
 
 all files are in the public domain.  this code has been written by
-mechiel lukkien, reachable at mechiel@ueber.net or mechiel@xs4all.nl.
+mechiel lukkien, reachable at mechiel@ueber.net.
 
 
 # todo
